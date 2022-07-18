@@ -1,17 +1,16 @@
-package com.KoreaIT.java.BAM;
+package com.KoreaIT.java.BAM.util;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-class TimeExample {
-	public static void main(String[] args) {
+public class Util {
+	// 현재 날짜와 시간 리턴
+	public static String getNowDateStr() {
 
 		SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
 		Date now = new Date();
 
-		String nowTime1 = sdf1.format(now);
-
-		System.out.println(nowTime1);
+		return sdf1.format(now);
 	}
 }

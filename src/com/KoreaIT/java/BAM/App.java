@@ -5,15 +5,19 @@ import java.util.List;
 import java.util.Scanner;
 
 import com.KoreaIT.java.BAM.dto.Article;
+import com.KoreaIT.java.BAM.dto.Member;
 import com.KoreaIT.java.BAM.util.Util;
 
 public class App {
 	private List<Article> articles;
+	private List<Member> members;
 
 	public App() {
 		articles = new ArrayList<>();
+		members = new ArrayList<>() ;
 	}
-
+	
+	
 	public void run() {
 		System.out.println("==프로그램 시작==");
 
@@ -46,6 +50,22 @@ public class App {
 				articles.add(article);
 
 				System.out.printf("%d번 글이 생성되었습니다\n", id);
+
+			} else if (cmd.equals("member join")) {
+				int id = members.size() + 1;
+				System.out.printf("로그인 아이디 : ");
+				String loginId = sc.nextLine();
+				System.out.printf("로그인 비밀번호 : ");
+				String loginPw = sc.nextLine();
+				System.out.printf("로그인 비밀번호 확인 : ");
+				String loginPwConfirm = sc.nextLine();
+				System.out.printf("이름 : ");
+				String memberName = sc.nextLine();
+				
+				Member member = new Member(loginId, loginPw, memberName);
+				members.add(member);
+				
+				System.out.printf("%번 회원님 환영합니다\n", id);
 
 			} else if (cmd.startsWith("article list")) {
 				if (articles.size() == 0) {

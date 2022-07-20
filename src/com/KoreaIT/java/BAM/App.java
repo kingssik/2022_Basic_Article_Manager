@@ -14,10 +14,9 @@ public class App {
 
 	public App() {
 		articles = new ArrayList<>();
-		members = new ArrayList<>() ;
+		members = new ArrayList<>();
 	}
-	
-	
+
 	public void run() {
 		System.out.println("==프로그램 시작==");
 
@@ -37,8 +36,49 @@ public class App {
 			if (cmd.equals("exit")) {
 				break;
 			}
+			if (cmd.equals("member join")) {
+				int id = members.size() + 1;
+				String regDate = Util.getNowDateStr();
+				String loginId = null;
 
-			if (cmd.equals("article write")) {
+				while (true) {
+
+					System.out.printf("로그인 아이디 : ");
+					loginId = sc.nextLine();
+
+					if (isJoinableLoginId(loginId) == false) {
+						System.out.printf("%s은(는) 이미 사용중인 아이디입니다\n", loginId);
+						continue;
+					}
+					break;
+				}
+
+				String loginPw = null;
+				String loginPwConfirm = null;
+
+				while (true) {
+
+					System.out.printf("로그인 비밀번호 : ");
+					loginPw = sc.nextLine();
+					System.out.printf("로그인 비밀번호 확인 : ");
+					loginPwConfirm = sc.nextLine();
+
+					if (loginPw.equals(loginPwConfirm) == false) {
+						System.out.println("비밀번호를 다시 입력해주세요");
+						continue;
+					}
+					break;
+				}
+
+				System.out.printf("이름 : ");
+				String name = sc.nextLine();
+
+				Member member = new Member(id, regDate, loginId, loginPw, name);
+				members.add(member);
+
+				System.out.printf("%d번 회원님 환영합니다\n", id);
+
+			} else if (cmd.equals("article write")) {
 				int id = articles.size() + 1;
 				String regDate = Util.getNowDateStr();
 				System.out.printf("제목 : ");
@@ -50,30 +90,6 @@ public class App {
 				articles.add(article);
 
 				System.out.printf("%d번 글이 생성되었습니다\n", id);
-
-			} else if (cmd.equals("member join")) {
-				int id = members.size() + 1;
-				System.out.printf("로그인 아이디 : ");
-				String loginId = sc.nextLine();
-				
-				for (int i = 0; i < members.size(); i++) {
-					String getMemberIdByIndex = Member.loginId;
-					if (getMemberIdByIndex.equals(loginId)) {
-						System.out.println("이미 사용 중인 아이디입니다");
-					}
-				}
-				
-				System.out.printf("로그인 비밀번호 : ");
-				String loginPw = sc.nextLine();
-				System.out.printf("로그인 비밀번호 확인 : ");
-				String loginPwConfirm = sc.nextLine();
-				System.out.printf("이름 : ");
-				String memberName = sc.nextLine();
-				
-				Member member = new Member(loginId, loginPw, memberName);
-				members.add(member);
-				
-				System.out.printf("%번 회원님 환영합니다\n", id);
 
 			} else if (cmd.startsWith("article list")) {
 				if (articles.size() == 0) {
@@ -176,6 +192,28 @@ public class App {
 
 		System.out.println("==프로그램 끝==");
 		sc.close();
+	}
+
+	private boolean isJoinableLoginId(String loginId) {
+		int index = getMemberIndexByLoginId(loginId);
+
+		if (index == -1) {
+			return true;
+		}
+
+		return false;
+	}
+
+	private int getMemberIndexByLoginId(String loginId) {
+		int i = 0;
+		for (Member member : members) {
+			if (member.loginId.equals(loginId)) {
+				return i;
+			}
+			i++;
+		}
+
+		return -1;
 	}
 
 	private int getArticleIndexById(int id) {

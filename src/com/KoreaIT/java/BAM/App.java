@@ -55,6 +55,14 @@ public class App {
 				int id = members.size() + 1;
 				System.out.printf("로그인 아이디 : ");
 				String loginId = sc.nextLine();
+				
+				for (int i = 0; i < members.size(); i++) {
+					String getMemberIdByIndex = Member.loginId;
+					if (getMemberIdByIndex.equals(loginId)) {
+						System.out.println("이미 사용 중인 아이디입니다");
+					}
+				}
+				
 				System.out.printf("로그인 비밀번호 : ");
 				String loginPw = sc.nextLine();
 				System.out.printf("로그인 비밀번호 확인 : ");

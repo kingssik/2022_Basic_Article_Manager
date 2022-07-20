@@ -7,7 +7,6 @@ import com.KoreaIT.java.BAM.dto.Member;
 import com.KoreaIT.java.BAM.util.Util;
 
 public class MemberController {
-
 	private Scanner sc;
 	private List<Member> members;
 
@@ -57,7 +56,6 @@ public class MemberController {
 		members.add(member);
 
 		System.out.printf("%d번 회원님 환영합니다\n", id);
-
 	}
 
 	private boolean isJoinableLoginId(String loginId) {
@@ -81,4 +79,5 @@ public class MemberController {
 
 		return -1;
 	}
+
 }

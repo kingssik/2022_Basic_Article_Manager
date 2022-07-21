@@ -10,14 +10,28 @@ import com.KoreaIT.java.BAM.util.Util;
 public class ArticleController extends Controller {
 	private Scanner sc;
 	private List<Article> articles;
+	private String cmd;
 
 	public ArticleController(Scanner sc, List<Article> articles) {
 		this.sc = sc;
 		this.articles = articles;
 	}
 
-	public void doAction(String cmd) {
-
+	public void doAction(String cmd, String actionMethodName) {
+		this.cmd = cmd;
+		if (cmd.equals("article write")) {
+			this.doWrite();
+		} else if (cmd.startsWith("article list")) {
+			this.showList(cmd);
+		} else if (cmd.startsWith("article detail ")) {
+			this.showDetail(cmd);
+		} else if (cmd.startsWith("article modify ")) {
+			this.doModify(cmd);
+		} else if (cmd.startsWith("article delete ")) {
+			this.doDelete(cmd);
+		} else {
+			System.out.println("존재하지 않는 명령어입니다");
+		}
 	}
 
 	public void doWrite() {
@@ -74,6 +88,11 @@ public class ArticleController extends Controller {
 	public void showDetail(String cmd) {
 		String[] cmdBits = cmd.split(" ");
 
+		if(cmdBits.length == 2) {
+			System.out.println("명령어를 확인해주세요");
+			return;
+		}
+		
 		int id = Integer.parseInt(cmdBits[2]);
 
 		Article foundArticle = getArticleById(id);

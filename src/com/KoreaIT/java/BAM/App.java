@@ -3,7 +3,6 @@ package com.KoreaIT.java.BAM;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
-
 import com.KoreaIT.java.BAM.controller.ArticleController;
 import com.KoreaIT.java.BAM.controller.Controller;
 import com.KoreaIT.java.BAM.controller.MemberController;
@@ -51,11 +50,11 @@ public class App {
 			}
 
 			String controllerName = cmdBits[0]; // article
-//			String actionMethodName = cmdBits[1]; // detail
+			String actionMethodName = cmdBits[1]; // detail
 
 			Controller controller = null;
 
-			if (controllerName.equals("article")) {
+			if (controllerName.equals("article")) { // 경우의 수를 나눔
 				controller = articleController;
 			} else if (controllerName.equals("member")) {
 				controller = memberController;
@@ -64,25 +63,9 @@ public class App {
 				continue;
 			}
 
-			controller.doAction(cmd);
+			controller.doAction(cmd, actionMethodName);
 
-//			if (cmd.equals("member join")) {
-//				memberController.doJoin();
-//			} else if (cmd.equals("article write")) {
-//				articleController.doWrite();
-//			} else if (cmd.startsWith("article list")) {
-//				articleController.showList(cmd);
-//			} else if (cmd.startsWith("article detail ")) {
-//				articleController.showDetail(cmd);
-//			} else if (cmd.startsWith("article modify ")) {
-//				articleController.doModify(cmd);
-//			} else if (cmd.startsWith("article delete ")) {
-//				articleController.doDelete(cmd);
-//			} else {
-//				System.out.println("존재하지 않는 명령어입니다");
-//			}
 		}
-
 		System.out.println("==프로그램 끝==");
 		sc.close();
 	}

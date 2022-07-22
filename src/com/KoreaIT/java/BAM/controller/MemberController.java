@@ -27,10 +27,17 @@ public class MemberController extends Controller {
 		case "join":
 			doJoin();
 			break;
+		case "login":
+			doLogin();
+			break;
 		default:
 			System.out.println("존재하지 않는 명령어입니다");
 			break;
 		}
+	}
+
+	private void doLogin() {
+		
 	}
 
 	private void doJoin() {

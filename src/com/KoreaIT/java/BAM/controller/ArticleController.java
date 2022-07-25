@@ -92,11 +92,11 @@ public class ArticleController extends Controller {
 			}
 		}
 
-		System.out.printf("번호     |   제목       |     %7s    |   작성자  |   조회\n", "날짜");
+		System.out.printf("번호    |   제목     |     %7s        |    작성자  |   조회\n", "날짜");
 		for (int i = forPrintArticles.size() - 1; i >= 0; i--) {
 			Article article = forPrintArticles.get(i);
 
-			System.out.printf("%7d | %6s   | %5s |  %7s  | %5d\n", article.id, article.title, article.regDate,
+			System.out.printf("%7d | %6s   | %5s  |   %7s  | %5d\n", article.id, article.title, article.regDate,
 					article.memberId, article.hit);
 		}
 
@@ -146,6 +146,12 @@ public class ArticleController extends Controller {
 			System.out.printf("%d번 게시물은 없습니다\n", id);
 			return;
 		}
+
+		if (foundArticle.memberId != loginedMember.id) {
+			System.out.printf("권한이 없습니다\n");
+			return;
+		}
+
 		System.out.printf("제목 : ");
 		String title = sc.nextLine();
 		System.out.printf("내용 : ");
@@ -168,14 +174,19 @@ public class ArticleController extends Controller {
 
 		int id = Integer.parseInt(cmdBits[2]);
 
-		int foundIndex = getArticleIndexById(id);
+		Article foundArticle = getArticleById(id);
 
-		if (foundIndex == -1) {
+		if (foundArticle == null) {
 			System.out.printf("%d번 게시물은 없습니다\n", id);
 			return;
 		}
 
-		articles.remove(foundIndex);
+		if (foundArticle.memberId != loginedMember.id) {
+			System.out.printf("권한이 없습니다\n");
+			return;
+		}
+
+		articles.remove(foundArticle);
 		System.out.printf("%d번 게시물을 삭제했습니다\n", id);
 
 	}

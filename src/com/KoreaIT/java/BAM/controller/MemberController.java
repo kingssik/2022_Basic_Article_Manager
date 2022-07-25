@@ -13,7 +13,6 @@ public class MemberController extends Controller {
 	private List<Member> members;
 	private String cmd;
 	private String actionMethodName;
-	private Member loginedMember;
 
 	public MemberController(Scanner sc) {
 		this.sc = sc;
@@ -63,7 +62,7 @@ public class MemberController extends Controller {
 		System.out.printf("로그인 아이디 : ");
 		String loginId = sc.nextLine().trim();
 		System.out.printf("로그인 비밀번호 : ");
-		String loginPw = sc.nextLine().trim();
+		String loginPw = sc.nextLine();
 
 		Member member = getMemberByLoginId(loginId);
 
@@ -145,10 +144,6 @@ public class MemberController extends Controller {
 		return members.get(index);
 	}
 
-	private boolean isLogined() {
-		return loginedMember != null;
-	}
-
 	private boolean isJoinableLoginId(String loginId) {
 		int index = getMemberIndexByLoginId(loginId);
 
@@ -174,8 +169,8 @@ public class MemberController extends Controller {
 	public void makeTestData() {
 		System.out.println("테스트를 위한 회원 데이터를 생성합니다.");
 
-		members.add(new Member(1, Util.getNowDateStr(), "test1", "test1", "name1"));
-		members.add(new Member(2, Util.getNowDateStr(), "test2", "test2", "name2"));
-		members.add(new Member(3, Util.getNowDateStr(), "test3", "test3", "name3"));
+		members.add(new Member(1, Util.getNowDateStr(), "test1", "test1", "홍길동"));
+		members.add(new Member(2, Util.getNowDateStr(), "test2", "test2", "김철수"));
+		members.add(new Member(3, Util.getNowDateStr(), "test3", "test3", "박영수"));
 	}
 }

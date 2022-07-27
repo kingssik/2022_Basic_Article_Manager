@@ -48,8 +48,7 @@ public class ArticleController extends Controller {
 	}
 
 	private void doWrite() {
-
-		int id = Container.articleDao.getnewId();
+		int id = Container.articleDao.setNewId();
 		String regDate = Util.getNowDateStr();
 		System.out.printf("제목 : ");
 		String title = sc.nextLine();
@@ -57,7 +56,7 @@ public class ArticleController extends Controller {
 		String body = sc.nextLine();
 
 		Article article = new Article(id, regDate, loginedMember.id, title, body);
-		articles.add(article);
+		Container.articleDao.add(article);
 
 		System.out.printf("%d번 글이 생성되었습니다\n", id);
 
@@ -128,13 +127,24 @@ public class ArticleController extends Controller {
 			return;
 		}
 
+		String writerName = null;
+
+		List<Member> members = Container.memberDao.members;
+
+		for (Member member : members) {
+			if (foundArticle.memberId == member.id) {
+				writerName = member.name;
+				break;
+			}
+		}
+
 		foundArticle.increaseHit();
 
 		System.out.printf("번호 : %d\n", foundArticle.id);
 		System.out.printf("날짜 : %s\n", foundArticle.regDate);
 		System.out.printf("제목 : %s\n", foundArticle.title);
 		System.out.printf("내용 : %s\n", foundArticle.body);
-		System.out.printf("작성자 : %s\n", foundArticle.memberId);
+		System.out.printf("작성자 : %s\n", writerName);
 		System.out.printf("조회 : %d\n", foundArticle.hit);
 
 	}
@@ -226,11 +236,11 @@ public class ArticleController extends Controller {
 		System.out.println("테스트를 위한 게시물 데이터를 생성합니다.");
 
 		Container.articleDao
-				.add(new Article(Container.articleDao.getnewId(), Util.getNowDateStr(), 1, "제목1", "내용1", 11));
+				.add(new Article(Container.articleDao.setNewId(), Util.getNowDateStr(), 1, "제목1", "내용1", 11));
 		Container.articleDao
-				.add(new Article(Container.articleDao.getnewId(), Util.getNowDateStr(), 2, "제목2", "내용2", 22));
+				.add(new Article(Container.articleDao.setNewId(), Util.getNowDateStr(), 2, "제목2", "내용2", 22));
 		Container.articleDao
-				.add(new Article(Container.articleDao.getnewId(), Util.getNowDateStr(), 2, "제목3", "내용3", 33));
+				.add(new Article(Container.articleDao.setNewId(), Util.getNowDateStr(), 2, "제목3", "내용3", 33));
 	}
 
 }
